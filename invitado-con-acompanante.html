@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confirmación — Gerardo & Karla</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Cormorant+Garamond:ital@1&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #f7f5f2; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem 1rem; font-family: 'Playfair Display', Georgia, serif; }
+    .card { background: #fff; border: 1px solid #e2dcd4; border-radius: 4px; max-width: 480px; width: 100%; padding: 3rem 2.5rem; color: #1a1a1a; }
+    .eyebrow { font-size: 10px; letter-spacing: 4px; color: #999; font-family: 'Helvetica Neue', Arial, sans-serif; margin-bottom: 0.75rem; text-align: center; }
+    .names { font-size: 26px; font-weight: 400; letter-spacing: 1px; text-align: center; }
+    .script { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 22px; }
+    .date-line { font-size: 10px; letter-spacing: 3px; color: #999; font-family: 'Helvetica Neue', Arial, sans-serif; margin-top: 0.4rem; text-align: center; }
+    .divider { text-align: center; color: #ccc; margin: 1.25rem 0; letter-spacing: 6px; font-size: 16px; }
+    .subtitle { font-size: 13px; color: #666; font-family: 'Helvetica Neue', Arial, sans-serif; line-height: 1.7; text-align: center; }
+    .section-title { font-size: 11px; letter-spacing: 3px; color: #bbb; font-family: 'Helvetica Neue', Arial, sans-serif; text-transform: uppercase; margin: 1.75rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 0.5px solid #ece8e2; }
+    .field { margin-bottom: 1.25rem; }
+    .field label { display: block; font-size: 10px; letter-spacing: 2.5px; color: #999; font-family: 'Helvetica Neue', Arial, sans-serif; margin-bottom: 8px; }
+    .field input[type=text] { width: 100%; border: 0.5px solid #ccc; border-radius: 2px; padding: 11px 14px; font-size: 15px; font-family: 'Playfair Display', serif; background: #fdfcfb; outline: none; transition: border-color 0.15s; }
+    .field input[type=text]:focus { border-color: #1a1a1a; }
+    .options-row { display: flex; gap: 10px; }
+    .options-row.three { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+    .opt-card { border: 0.5px solid #d5cec5; border-radius: 3px; padding: 0.85rem 0.5rem; text-align: center; cursor: pointer; transition: border-color 0.15s, background 0.15s; background: #fff; flex: 1; user-select: none; }
+    .opt-card:hover { border-color: #888; background: #faf9f7; }
+    .opt-card.selected { border: 1.5px solid #1a1a1a; background: #f5f3ef; }
+    .opt-icon { font-size: 22px; margin-bottom: 5px; }
+    .opt-label { font-size: 12px; font-family: 'Helvetica Neue', Arial, sans-serif; color: #555; letter-spacing: 0.5px; }
+    .hidden { display: none; }
+    .submit-btn { width: 100%; background: #1a1a1a; color: #fff; border: none; border-radius: 2px; padding: 14px; font-size: 11px; font-family: 'Helvetica Neue', Arial, sans-serif; letter-spacing: 3px; cursor: pointer; margin-top: 1.75rem; transition: background 0.15s; }
+    .submit-btn:hover { background: #333; }
+    .submit-btn:disabled { background: #aaa; cursor: not-allowed; }
+    .footer-note { text-align: center; margin-top: 1.5rem; font-size: 11px; color: #bbb; font-family: 'Helvetica Neue', Arial, sans-serif; letter-spacing: 1px; }
+    .error-msg { font-size: 12px; color: #c0392b; font-family: 'Helvetica Neue', Arial, sans-serif; margin-top: 0.5rem; display: none; }
+    .success { display: none; text-align: center; padding: 1rem 0; }
+    .success-icon { font-size: 36px; margin-bottom: 1rem; }
+    .success-name { font-size: 20px; font-weight: 500; margin-bottom: 0.75rem; }
+    .success-msg { font-size: 13px; color: #666; font-family: 'Helvetica Neue', Arial, sans-serif; line-height: 1.8; }
+  </style>
+</head>
+<body>
+<div class="card">
+  <div class="eyebrow">CONFIRMACIÓN DE ASISTENCIA</div>
+  <div class="names">Gerardo <span class="script">&</span> Karla</div>
+  <div class="date-line">14 · NOVIEMBRE · 2026</div>
+  <div class="divider">— ♡ —</div>
+  <div class="subtitle" style="margin-bottom:1.5rem;">Nos encantaría contar con tu presencia.<br>Por favor confirma antes del <strong>31 de octubre.</strong></div>
+
+  <div id="formSection">
+
+    <div class="section-title">Tus datos</div>
+
+    <div class="field">
+      <label>TU NOMBRE COMPLETO</label>
+      <input type="text" id="nombre" placeholder="Escribe tu nombre..." />
+    </div>
+
+    <div class="field">
+      <label>NOMBRE DE TU ACOMPAÑANTE</label>
+      <input type="text" id="nomAcom" placeholder="Nombre de tu acompañante..." />
+    </div>
+
+    <div class="field">
+      <label>¿CONFIRMAN SU ASISTENCIA?</label>
+      <div class="options-row">
+        <div class="opt-card" id="opt-si" onclick="selectAsistencia('si')">
+          <div class="opt-icon">✓</div>
+          <div class="opt-label">Sí, asistiremos</div>
+        </div>
+        <div class="opt-card" id="opt-no" onclick="selectAsistencia('no')">
+          <div class="opt-icon">✗</div>
+          <div class="opt-label">No podremos ir</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="seccionCenas" class="hidden">
+      <div class="section-title">Preferencia de cena</div>
+
+      <div class="field">
+        <label id="labelCena1">¿QUÉ PREFIERES PARA CENAR?</label>
+        <div class="options-row three">
+          <div class="opt-card" id="opt-pizza1" onclick="selectCena(1,'pizza')">
+            <div class="opt-icon">🍕</div>
+            <div class="opt-label">Pizza</div>
+          </div>
+          <div class="opt-card" id="opt-hamburguesa1" onclick="selectCena(1,'hamburguesa')">
+            <div class="opt-icon">🍔</div>
+            <div class="opt-label">Hamburguesa</div>
+          </div>
+          <div class="opt-card" id="opt-hotdog1" onclick="selectCena(1,'hotdog')">
+            <div class="opt-icon">🌭</div>
+            <div class="opt-label">Hot dog</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label id="labelCena2">¿QUÉ PREFIERE CENAR TU ACOMPAÑANTE?</label>
+        <div class="options-row three">
+          <div class="opt-card" id="opt-pizza2" onclick="selectCena(2,'pizza')">
+            <div class="opt-icon">🍕</div>
+            <div class="opt-label">Pizza</div>
+          </div>
+          <div class="opt-card" id="opt-hamburguesa2" onclick="selectCena(2,'hamburguesa')">
+            <div class="opt-icon">🍔</div>
+            <div class="opt-label">Hamburguesa</div>
+          </div>
+          <div class="opt-card" id="opt-hotdog2" onclick="selectCena(2,'hotdog')">
+            <div class="opt-icon">🌭</div>
+            <div class="opt-label">Hot dog</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="error-msg" id="errorMsg">Por favor completa todos los campos.</div>
+    <button class="submit-btn" id="submitBtn" onclick="enviar()">CONFIRMAR ASISTENCIA</button>
+    <div class="footer-note">· · ·<br>¿Dudas? Escríbenos por WhatsApp</div>
+  </div>
+
+  <div class="success" id="successSection">
+    <div class="success-icon">♡</div>
+    <div class="success-name" id="successNombre"></div>
+    <div class="success-msg" id="successMsg"></div>
+    <div class="divider" style="margin-top:1.5rem;">— ♡ —</div>
+    <div style="font-size:11px; color:#bbb; font-family:'Helvetica Neue',Arial,sans-serif; letter-spacing:2px; margin-top:0.5rem;">14 · NOVIEMBRE · 2026</div>
+  </div>
+</div>
+
+<script>
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbyiYO9jsLDLO0A0xRbeVWu8KK7Mqj-jqKOAg5g5r2idLotsuNaygJkD5OpoirKVdT7l/exec';
+  let asistencia = null;
+  let cena1 = null;
+  let cena2 = null;
+  const cenaLabel = { pizza: 'Pizza 🍕', hamburguesa: 'Hamburguesa 🍔', hotdog: 'Hot dog 🌭' };
+
+  function selectAsistencia(val) {
+    asistencia = val;
+    document.getElementById('opt-si').classList.toggle('selected', val === 'si');
+    document.getElementById('opt-no').classList.toggle('selected', val === 'no');
+    document.getElementById('seccionCenas').classList.toggle('hidden', val !== 'si');
+    if (val !== 'si') { cena1 = null; cena2 = null; }
+  }
+
+  function selectCena(quien, val) {
+    if (quien === 1) {
+      cena1 = val;
+      ['pizza','hamburguesa','hotdog'].forEach(f => document.getElementById('opt-'+f+'1').classList.toggle('selected', f === val));
+    } else {
+      cena2 = val;
+      ['pizza','hamburguesa','hotdog'].forEach(f => document.getElementById('opt-'+f+'2').classList.toggle('selected', f === val));
+    }
+    // update labels with names
+    const n1 = document.getElementById('nombre').value.trim();
+    const n2 = document.getElementById('nomAcom').value.trim();
+    if (n1) document.getElementById('labelCena1').textContent = '¿QUÉ PREFIERE CENAR ' + n1.split(' ')[0].toUpperCase() + '?';
+    if (n2) document.getElementById('labelCena2').textContent = '¿QUÉ PREFIERE CENAR ' + n2.split(' ')[0].toUpperCase() + '?';
+  }
+
+  document.getElementById('nombre').addEventListener('input', updateLabels);
+  document.getElementById('nomAcom').addEventListener('input', updateLabels);
+
+  function updateLabels() {
+    const n1 = document.getElementById('nombre').value.trim();
+    const n2 = document.getElementById('nomAcom').value.trim();
+    document.getElementById('labelCena1').textContent = n1 ? '¿QUÉ PREFIERE CENAR ' + n1.split(' ')[0].toUpperCase() + '?' : '¿QUÉ PREFIERES PARA CENAR?';
+    document.getElementById('labelCena2').textContent = n2 ? '¿QUÉ PREFIERE CENAR ' + n2.split(' ')[0].toUpperCase() + '?' : '¿QUÉ PREFIERE CENAR TU ACOMPAÑANTE?';
+  }
+
+  async function enviar() {
+    const nombre = document.getElementById('nombre').value.trim();
+    const nomAcom = document.getElementById('nomAcom').value.trim();
+    const err = document.getElementById('errorMsg');
+    err.style.display = 'none';
+    err.textContent = 'Por favor completa todos los campos.';
+
+    if (!nombre || !nomAcom || !asistencia) { err.style.display = 'block'; return; }
+    if (asistencia === 'si' && (!cena1 || !cena2)) { err.style.display = 'block'; return; }
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'ENVIANDO...';
+
+    const payload = {
+      nombre,
+      asistencia: asistencia === 'si' ? 'Sí' : 'No',
+      acompanante: nomAcom,
+      cena: asistencia === 'si' ? cena1 : '—',
+      cena_acompanante: asistencia === 'si' ? cena2 : '—'
+    };
+
+    try {
+      await fetch(SHEET_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('successSection').style.display = 'block';
+      document.getElementById('successNombre').textContent = '¡Gracias, ' + nombre.split(' ')[0] + ' y ' + nomAcom.split(' ')[0] + '!';
+      document.getElementById('successMsg').innerHTML = asistencia === 'si'
+        ? 'Su confirmación fue registrada.<br>' +
+          nombre.split(' ')[0] + ': <strong>' + cenaLabel[cena1] + '</strong><br>' +
+          nomAcom.split(' ')[0] + ': <strong>' + cenaLabel[cena2] + '</strong><br><br>' +
+          '¡Los esperamos con mucho amor el 14 de noviembre!'
+        : 'Lamentamos que no puedan acompañarnos,<br>pero los tendremos en nuestros corazones<br>en este día tan especial. ♡';
+    } catch(e) {
+      btn.disabled = false;
+      btn.textContent = 'CONFIRMAR ASISTENCIA';
+      err.textContent = 'Hubo un error al enviar. Intenta de nuevo.';
+      err.style.display = 'block';
+    }
+  }
+</script>
+</body>
+</html>
